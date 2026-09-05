@@ -25,13 +25,9 @@ Current calculation prototype and verified desktop toolchain:
 
 The JavaScript code currently runs on the development computer. The proposed C++/LVGL firmware has not been implemented or built in this repository, and the existing Vitest results verify only the JavaScript calculation prototype. Embedded build and test evidence still needs to be collected when that toolchain is set up.
 
-The user has identified the display model; the PCB revision still needs confirmation before choosing the board initialization code. ELECROW documents revisions V1.0 through V1.3 with differences in backlight control. This ESP32-S3 is also intended to read the sensors and control the pump through an external motor driver. Sensor interfaces, driver connections, and available pins must be confirmed against the display board revision before assigning GPIOs.
-
-Hardware references: [ELECROW product page](https://www.elecrow.com/crowpanel-advance-5-0-hmi-esp32-ai-display-800x480-ips-artificial-intelligent-touch-screen.html) and [official wiki with revision-specific Arduino, ESP-IDF, and PlatformIO examples](https://static-cdn.elecrow.com/wiki/CrowPanel_Advance_5.0-HMI_ESP32_AI_Display.html).
-
 ## Selected hardware
 
-The following inventory is transcribed from the user's order screenshots. Listing ratings are recorded for identification; electrical compatibility and actual dispensing performance have not yet been verified.
+Listing ratings are recorded for identification; electrical compatibility and actual dispensing performance have not yet been verified.
 
 | Component | Selected part / visible listing | Details still needed |
 | --- | --- | --- |
@@ -47,8 +43,6 @@ The following inventory is transcribed from the user's order screenshots. Listin
 
 The planned control path is sensor readings into the ESP32-S3, followed by authorized control signals from the ESP32-S3 to the BTS7960 module, which drives the Kamoer pump. GPIO assignments and a wiring diagram remain pending the interface details above. The listed 600 mL/min is a nominal product rating, not a calibrated value to hard-code as actual flow.
 
-The additional sensor screenshots establish the listed NPN normally-open output type and the HX711/5 kg kit selection. They do not establish receiver output circuitry, connector pin assignments, or HX711 board wiring. Verify these before connecting signals to the ESP32-S3. The stated 80 cm sensor distance is a listing test distance; bottle detection must be checked with the actual bottle, liquid, and sensor placement. The 5 kg load-cell rating is capacity, not measurement accuracy.
-
 ## Planned display workflow
 
 1. Enter the target volume using a numeric keypad with Delete and Enter controls.
@@ -58,7 +52,7 @@ The additional sensor screenshots establish the listed NPN normally-open output 
 5. If more is needed, accept one bounded manual addition per tap, including when the button is held, and record the number of additions.
 6. Record a confirmed outcome or a canceled/failed outcome and return to the entry screen.
 
-Preventing overfill is a system requirement from the sketch. The firmware must enforce bottle-capacity limits, sensor checks, and pump shutoff behavior, and these must be verified on the assembled system. Bottle-size thresholds and manual-addition amounts are not yet specified.
+Preventing overfill is a system requirement. The firmware must enforce bottle-capacity limits, sensor checks, and pump shutoff behavior, and these must be verified on the assembled system. Bottle-size thresholds and manual-addition amounts are not yet specified.
 
 ## Planned sensor and pump logic
 
@@ -72,43 +66,11 @@ The firmware will use a state machine to coordinate volume entry, waiting for a 
 - Default to a pump-off state at startup, reset, and fault recovery; require a fresh user confirmation before restarting. Verify the motor driver's default-off electrical behavior during hardware integration.
 - Record the target, measured result when available, manual-addition count, and completion/cancellation/fault outcome. The storage method remains to be selected.
 
-Before hardware implementation, confirm the remaining hardware details in the inventory, pin assignments, bottle capacities, liquid density, and calibrated dispensing limits. Verification will include simulated sensor/state tests followed by checks on the assembled dispenser; the existing JavaScript tests do not verify these controls.
-
 ## Current milestone status
 
 - Implemented: dispensing-time calculation, input validation, automated tests, and project documentation.
 - Planned: touchscreen screens, embedded dispensing state machine, sensor acquisition and calibration, motor-driver control, simulated sensor/state tests, hardware verification, and outcome logging.
 - The current calculation estimates time from a supplied flow rate; it does not control a pump or measure actual dispensed volume.
-
-## Setup and verification
-
-Install the locked dependencies and run the test suite:
-
-```sh
-npm ci
-npm test
-```
-
-To capture the complete toolchain evidence requested for the milestone, run:
-
-```sh
-node --version
-npm --version
-npm test
-git status
-```
-
-A clean checkout should report passing tests and a clean Git working tree after these commands.
-
-## Usage
-
-```js
-import { calculateDispenseTime } from './src/dispensing.js';
-
-calculateDispenseTime(500, 100); // 5 minutes
-```
-
-Both arguments must be finite numbers greater than zero. Invalid measurements throw a `RangeError`.
 
 ## Project layout
 
