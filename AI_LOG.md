@@ -65,3 +65,15 @@
 **Resulting changes:** Updated the README inventory with the visible sensor specifications and replaced the unresolved amplifier identity and load-cell capacity with HX711 and 5 kg. Retained wiring, signal compatibility, mounting, and calibration as unverified implementation details.
 
 **Verification:** Matched the revised inventory against the supplied screenshots and ran `git diff --check`. No executable code changed or hardware tests were performed.
+
+## 2026-09-04 — Install the embedded development tools
+
+**Tool:** OpenAI Codex
+
+**Prompt:** "lets install all needed tools to do this project"
+
+**Resulting changes:** Installed the PlatformIO IDE extension, an isolated Python 3.11 environment, and the PlatformIO Core tools. Added the Core commands to the user PATH. Used the ESP32 platform and display-library versions from ELECROW's current V1.2/V1.3 example and added the HX711 library. Created `tools/esp32-check` as a small compile-only C++ installation check, added setup documentation and extension recommendations, and ignored generated `.pio` directories. The check does not implement the dispenser or assign hardware pins.
+
+**Installation troubleshooting:** The VS Code extension's automatic Core installer overlapped with the manual installation and reported a missing `pip` module. Verified the completed environment's `pip` and Core commands before continuing. No antivirus settings were changed.
+
+**Verification:** The existing 12 JavaScript tests pass. The ESP32-S3 installation check compiled and linked successfully with Arduino-ESP32, LVGL, LovyanGFX, TAMC_GT911, and HX711. The platform installer added pioarduino Core dependencies; aligned Uvicorn to 0.40.0 and Click to 8.3.3 to satisfy the installed tools. Versions and reproduction commands are recorded in `tools/esp32-check/README.md`. No serial device was detected, no board was flashed, and physical display, sensor, and pump behavior has not been tested. The PCB revision remains unconfirmed.

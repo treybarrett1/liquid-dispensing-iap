@@ -1,5 +1,7 @@
 {
     "recommendations": [
-        "openai.chatgpt"
+        "openai.chatgpt",
+        "platformio.platformio-ide",
+        "ms-vscode.cpptools"
     ]
 }

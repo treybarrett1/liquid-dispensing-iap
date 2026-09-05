@@ -10,8 +10,8 @@ Planned embedded control application:
 
 - Hardware: ELECROW CrowPanel Advance 5.0-inch HMI, ESP32-S3, 800 x 480 IPS touchscreen (manufacturer model DIS02050A).
 - Processor and memory: dual-core Xtensa LX7 up to 240 MHz, 512 KB SRAM, 8 MB PSRAM, and 16 MB flash.
-- Proposed firmware stack: C++ with the Arduino framework and LVGL for the touchscreen interface.
-- Proposed build and dependency tooling: PlatformIO in VS Code, starting from ELECROW's example for the matching hardware revision.
+- Firmware stack: C++ with the Arduino framework and LVGL for the touchscreen interface.
+- Build and dependency tooling: PlatformIO in VS Code. The installation check pins the pioarduino ESP32 platform and library versions used by ELECROW's current V1.2/V1.3 example; deployable firmware still needs to match the physical board revision.
 - Version control and hosting: Git and GitHub.
 - AI coding tool: OpenAI Codex.
 
@@ -23,7 +23,7 @@ Current calculation prototype and verified desktop toolchain:
 - Version control and hosting: Git and GitHub
 - AI coding tool: OpenAI Codex
 
-The JavaScript code currently runs on the development computer. The proposed C++/LVGL firmware has not been implemented or built in this repository, and the existing Vitest results verify only the JavaScript calculation prototype. Embedded build and test evidence still needs to be collected when that toolchain is set up.
+The JavaScript code runs on the development computer, and Vitest verifies only that calculation prototype. The repository also contains a small C++ installation check in `tools/esp32-check` for compiling the ESP32-S3 framework and libraries. The dispenser firmware itself has not been implemented, and hardware operation remains unverified.
 
 ## Selected hardware
 
@@ -68,7 +68,7 @@ The firmware will use a state machine to coordinate volume entry, waiting for a 
 
 ## Current milestone status
 
-- Implemented: dispensing-time calculation, input validation, automated tests, and project documentation.
+- Implemented: dispensing-time calculation, input validation, automated tests, project documentation, and a successful ESP32-S3 toolchain compilation check.
 - Planned: touchscreen screens, embedded dispensing state machine, sensor acquisition and calibration, motor-driver control, simulated sensor/state tests, hardware verification, and outcome logging.
 - The current calculation estimates time from a supplied flow rate; it does not control a pump or measure actual dispensed volume.
 
@@ -78,3 +78,4 @@ The firmware will use a state machine to coordinate volume entry, waiting for a 
 - `src/volume.js` contains measurement validation.
 - `test/dispensing.test.js` contains the automated tests.
 - `AI_LOG.md` records AI assistance and the resulting changes.
+- `tools/esp32-check/` contains the compile-only embedded toolchain check and pinned library dependencies.

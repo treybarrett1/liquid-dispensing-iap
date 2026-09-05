@@ -1,4 +1,5 @@
 node_modules/
+.pio/
 coverage/
 .DS_Store
 *.log
