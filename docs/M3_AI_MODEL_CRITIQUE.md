@@ -1,5 +1,19 @@
 # IAP M3 - Critique of the AI's First Domain Model
 
+## Personal Written Critique
+
+The AI’s first domain model captured the main parts of my dispenser, but it included more structure than I think this project needs. It used 13 classes and three enumerations. My revised model uses seven classes. My goal was not simply to reduce the number of boxes, but to make each object’s purpose and lifetime clearer.
+
+One example of over-modelling was separating Dispenser, FillRequest, BottlePreparation, and DispenseRun. These objects describe different stages of one interaction, and the target volume appeared in both the request and run. I combined the current interaction into FillSession, which holds the target, bottle confirmation, tare, and operating state. My requirements do not call for queued requests or independently stored bottle-preparation records, so those separate objects added complexity without a clear benefit.
+
+The biggest weakness was ownership of manual additions. The AI made DispenseRun the composite owner of ManualAddition, while RunOutcome referenced those additions for retained history. That left an important question unanswered: what happens to the addition details when the current run object is discarded? In my model, the durable RunRecord owns its additions, so their lifetime matches the saved result.
+
+The AI also separated PendingRunMarker from RunOutcome, repeating the run identifier and target. I represented these as states of one RunRecord. A record begins as Pending and later becomes Confirmed, Cancelled, or Failed. After an interruption, recovery updates the same record instead of creating a second identity. This makes duplicate prevention easier to explain, although reliable storage still requires implementation and testing.
+One relationship the AI supplied without a clear requirement was linking every run to a fixed calibration-version object. Keeping calibration unchanged during a fill is sensible, but M2 does not require a historical calibration-version registry. My model therefore uses validated calibration values for the active session without assuming that additional history structure.
+
+The AI was right to distinguish bottle capacity from bottle detection, calibration from sensor readings, and completed additions from successfully measured additions. It also correctly treated interrupted measurements as checkpoints rather than final results. I retained those distinctions.
+Overall, the AI draft helped identify the domain concepts, but I would not accept its structure unchanged. My revised model makes temporary interaction state and durable records easier to distinguish, while keeping the relationships tied to the M2 requirements. Neither model proves that shutdown timing, storage recovery, or physical dispensing will work; those still need testing.
+
 ## Evidence and conclusion
 
 The [unchanged first draft](ai/M3_DOMAIN_FIRST_DRAFT.md) was generated from the actual [M2 requirements](M2_REQUIREMENTS.md), saved, hashed, and committed as `63ed81f` before the [revised model](M3_DOMAIN_MODEL.md) was created. The [exact prompt](ai/M3_DOMAIN_PROMPT.txt) and [provenance](ai/M3_DOMAIN_CONTEXT.md) make the comparison reproducible. Both the revision and this critique received Codex assistance.
