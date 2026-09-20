@@ -2,6 +2,13 @@
 
 Date: 2026-09-20
 
+## Personal Reflection Comfirmation
+
+The AI produced a useful starting point, but comparing its response with my project plan showed why a reasonable-looking requirements list still needs review. It covered volume entry, bottle detection, dispensing progress, and outcome logging. However, it missed important details about bottle capacity and manual additions. Detecting a bottle does not prove that it can hold the requested volume, and a manual-addition button needs explicit rules for holding, releasing, and repeated taps.
+The AI also introduced behavior that did not match my original plan. It suggested resuming a stopped fill through a manual addition. My requirements instead call for a fresh readiness check and confirmation before starting another cycle. That difference matters because stopping should remove authorization to continue pumping.
+One useful suggestion was recording the calibration identifier and pump runtime for each fill. Those fields were not included in my original documented requirements. They would help explain whether differences between trials came from changed calibration settings or pump behavior.
+My main takeaway is that AI can help identify requirements and questions, but its output should not become the specification automatically. I need to check each suggestion against the intended workflow, reject unsupported additions, and define measurable acceptance criteria. The proposed timing and reliability thresholds also need hardware testing before I can claim the system meets them.
+
 ## Evidence and method
 
 The scope reference is the public project's September 4 README at `f32e6a0655424dafbc6408624b239a97434a1397`. The project-specific [requirements](M2_REQUIREMENTS.md) were drafted and saved first. A separate Codex session then received only the [concept prompt](ai/M2_ELICITATION_PROMPT.txt), with no conversation history or access to those requirements. Its first [complete response](ai/M2_ELICITATION_RESPONSE.md) is retained unchanged. [Run provenance](ai/M2_ELICITATION_CONTEXT.md) records the second operational message and file hashes. The [prompt-and-diff log](../AI_LOG.md) records the resulting repository changes.
