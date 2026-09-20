@@ -1,0 +1,5 @@
+Read only the M2 requirements file at C:/Users/Trey Barrett/Documents/GitHub/liquid-dispensing-iap/docs/M2_REQUIREMENTS.md.
+
+Draft a domain model for the application described by those requirements. Return one complete Markdown response containing a Mermaid UML class diagram, a short explanation of the classes and relationships (including multiplicities), a mapping to the M2 requirement identifiers, and assumptions or unresolved questions. Choose the abstraction level you think fits the domain.
+
+This is a first-draft evidence collection run. Do not edit files, read other project files or memory, browse the web, consult other agents, or critique/revise against another model. You may use a tool only to read the specified requirements file. Your first completed answer will be preserved verbatim.
