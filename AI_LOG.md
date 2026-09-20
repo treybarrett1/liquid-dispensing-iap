@@ -1,5 +1,31 @@
 # AI Prompt-and-Diff Log
 
+## 2026-09-20 - M2 requirements and AI elicitation audit
+
+**Tool:** OpenAI Codex for repository work, project-specific requirements, and audit drafting; one separate Codex agent session for elicitation, with no shared conversation history. The exact model identifier was not independently returned by the agent tool. All new M2 prose is AI-assisted; no unaided student authorship or invented personal reflection is claimed.
+
+**User prompt:** "okay lets go back to the public iap, see what the current status and make sure the local reflects the status from last changes 2 week ago then complete this assignment." The attached IAP M2 rubric calls for 6-8 consistently formatted stories with acceptance criteria, exactly three falsifiable NFRs, a separate retained AI elicitation response, an audit of omissions/inventions/useful insights with a judgment, the repository URL, and a prompt-and-diff log.
+
+**Starting point:** Live GitHub `main` was verified at `f32e6a0655424dafbc6408624b239a97434a1397`, committed September 4 in America/Chicago (September 5 UTC). It contained the calculation prototype and dependency-only ESP32 compilation check. Newer local application work was preserved separately and in a named local stash before restoring this checkout to the public baseline. No app source, simulator, or dispenser firmware was added to this milestone.
+
+**Separate elicitation prompt and result:** [Exact concept prompt](docs/ai/M2_ELICITATION_PROMPT.txt), [additional operational constraint and provenance](docs/ai/M2_ELICITATION_CONTEXT.md), and [unedited first response](docs/ai/M2_ELICITATION_RESPONSE.md). The project-specific requirements file was saved before the elicitation run; its pre-run hash is recorded in provenance. The response was not coached to invent unwanted features or omit requirements.
+
+**Prompt-and-diff sequence:**
+
+| Step | Input / decision | Resulting diff |
+| --- | --- | --- |
+| 1 | User's M2 assignment and September 4 scope | Added `docs/M2_REQUIREMENTS.md`: eight stories with Given/When/Then criteria, exactly three measurable NFRs, traceability, and unresolved hardware/calibration decisions. |
+| 2 | Separate concept prompt, then a no-file-access evidence constraint | Added the exact prompt, unchanged AI response, and provenance under `docs/ai/`. No generated requirements were silently substituted for the project-specific draft. |
+| 3 | Compare generated text with scope and requirements | Added `docs/M2_AI_ELICITATION_AUDIT.md`: six omission findings, five unrequested/ambiguous proposal findings, useful insights, and accept/reject/clarify decisions. |
+| 4 | Preserve the one-tap workflow and fresh-confirmation recovery rule | Rejected the AI's alternate entered-volume top-up and post-Stop addition recovery; clarified that a completed tap is authorization, not a required extra modal dialog. These decisions are recorded in the audit; app code was not changed. |
+| 5 | Make the submission navigable | Added `docs/M2_SUBMISSION.md`; added M2 links/status to README and this log entry. |
+
+**Verification:** Reinstalled from the baseline lockfile with `npm ci --no-audit --no-fund` and ran `npm test`: 12 tests passed. Those tests exercise only the existing calculator and validation module. Reviewed story/NFR counts, retained AI-response integrity, document links, documentation-only diff, and staged whitespace checks. No browser, embedded build, or physical tests were claimed for this documentation change. Remote publication is verified after pushing by checking repository visibility, `main` commit, and file hashes against the local commit.
+
+**Review the actual diff:** `git diff f32e6a0655424dafbc6408624b239a97434a1397..HEAD -- README.md AI_LOG.md docs`. `git diff f32e6a0655424dafbc6408624b239a97434a1397..HEAD -- src test tools package.json package-lock.json .gitignore .vscode` must be empty for this milestone. This log gives the rationale; Git retains the exact edits.
+
+**Limitations:** New timing, durability, and retention thresholds are proposed requirements, not measured results. Existing hardware questions remain open. Useful ideas are compared against the recorded plan, not falsely attributed to the student's private thoughts. The repository evidence is prepared for submission; no course-site submission is performed.
+
 ## 2026-09-04 — Initial milestone completion
 
 **Tool:** OpenAI Codex

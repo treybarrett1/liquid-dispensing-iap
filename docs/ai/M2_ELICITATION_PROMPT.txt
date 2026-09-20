@@ -1,0 +1,5 @@
+Elicit requirements for this app concept:
+
+I am building an individual app for my EECE 4991 Junior Design liquid dispenser. The app runs on an ELECROW ESP32-S3 800 x 480 touchscreen and controls a Kamoer peristaltic pump through a BTS7960 motor driver. It uses IR break-beam bottle detection and HX711 load-cell readings. The operator enters a target volume in mL, places a bottle, confirms dispensing, sees progress, can stop or cancel, and reviews the fill. If more is needed, the operator can request small manual additions. The app records outcomes and manual additions for calibration work.
+
+Please propose 6-8 user stories with acceptance criteria and three measurable non-functional requirements. Ask clarifying questions where needed and identify assumptions. Return the requirements directly as Markdown.
