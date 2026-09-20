@@ -1,5 +1,31 @@
 # AI Prompt-and-Diff Log
 
+## 2026-09-20 - M3 domain model and AI critique
+
+**User prompt:** "next assignment", accompanied by the IAP M3 Domain Model and AI Critique assignment. It requires an AI model drafted from M2 and saved before revision, a revised class/ER diagram image and source, a specific structural critique, and this prompt-and-diff log.
+
+**Tools and authorship:** One independent Codex agent drafted the initial model from the exact M2 requirements. The main Codex session assisted with the revised model and critique. Mermaid CLI 11.17.0 rendered the diagram through an existing local Chromium executable. No unaided student authorship is claimed. The separate session returned no independent model-version identifier.
+
+**Baseline:** Synced public `main` to `d836675660876fc5fea90688d79d65f282563501`. M2 requirements were unchanged. The [exact AI prompt](docs/ai/M3_DOMAIN_PROMPT.txt) permitted reading only `docs/M2_REQUIREMENTS.md` and requested a Mermaid class diagram, relationship explanation, traceability, and open questions. No competing model or desired critique findings were supplied. The [first completed answer](docs/ai/M3_DOMAIN_FIRST_DRAFT.md) was preserved unchanged and committed as `63ed81fbe1d2f656462e44a1b8e0c12de60acdc7` before revision began. [Provenance](docs/ai/M3_DOMAIN_CONTEXT.md) records the input/output hashes and collection method.
+
+**Prompt-and-diff sequence:**
+
+| Step | Input / decision | Resulting change |
+| --- | --- | --- |
+| 1 | Ask for a domain model from the existing M2 requirements | Added the exact request, full unchanged first answer, and provenance; saved these in their own evidence commit. |
+| 2 | Inspect the AI's 13 ordinary classes and three enums against M2 | Identified unnecessary request/preparation/gesture objects, ambiguous runtime-versus-durable ownership, repeated counters, and an unsupported historical calibration association. Findings are grounded in the saved answer, not the assignment's generic warning about User/Role entities. |
+| 3 | Separate current interaction from durable evidence | Added a seven-class Mermaid model: FillSession, BottleSpec, Calibration, SensorFrame, RunRecord, ManualAddition, LocalHistory. Pending and terminal states share one run identity; retained addition values have one durable owner. |
+| 4 | Make behavioral and capacity constraints explicit | Added a model explanation with one traceability row per class, state/type definitions, multiplicities, pending-to-terminal recovery, the 50-terminal-plus-one-pending constraint, and remaining integration decisions. |
+| 5 | Compare the two structures | Added the written critique covering over-modelling, under-modelling, guessed relationships, correct choices, and reasons for each revision. |
+| 6 | Export and inspect the image | Added PNG/SVG outputs and renderer configuration. Shortened wrapped attribute labels and used a left-to-right layout after inspecting the export; domain semantics were unchanged. Added the retention invariant directly to the image. |
+| 7 | Package submission evidence | Added `docs/M3_SUBMISSION.md`, reproduction commands and rubric mapping; linked M3 from README and updated this log. |
+
+**Validation:** Parsed/rendered the Mermaid source successfully with CLI 11.17.0, inspected the exported image, checked relative document links and M2 traceability, and checked hashes proving the initial AI answer and M2 requirements remain unchanged. The documentation-only diff leaves the application source, dependencies, tests, and toolchain-check source at their previous versions. No new behavior was implemented, so no new unit tests or firmware/hardware tests were added or claimed. M2's prior 12 passing calculator tests remain historical evidence for unchanged code. Publication is checked after push against remote visibility, `main`, and file hashes.
+
+**Review exact edits:** `git diff d836675660876fc5fea90688d79d65f282563501..HEAD -- README.md AI_LOG.md docs`. The first-draft collection commit is followed by a separate revision/evidence commit. The AI response contains an intentional Markdown two-space line break; it is retained verbatim rather than altered to satisfy a trailing-whitespace check. The remaining authored files pass normal whitespace checks.
+
+**Limits:** The model does not establish physical fit, calibration, timing compliance, crash-safe storage, or pump behavior. The repository package is prepared for course submission; no course-site submission is performed.
+
 ## 2026-09-20 - M2 requirements and AI elicitation audit
 
 **Tool:** OpenAI Codex for repository work, project-specific requirements, and audit drafting; one separate Codex agent session for elicitation, with no shared conversation history. The exact model identifier was not independently returned by the agent tool. All new M2 prose is AI-assisted; no unaided student authorship or invented personal reflection is claimed.

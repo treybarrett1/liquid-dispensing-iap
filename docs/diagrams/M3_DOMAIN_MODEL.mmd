@@ -1,0 +1,97 @@
+---
+title: Liquid dispenser - revised domain model
+---
+classDiagram
+    direction LR
+
+    class FillSession {
+        <<transient>>
+        phase : SessionPhase
+        targetMl : decimal [0..1]
+        emptyAndCapacityConfirmed : bool
+        tareG : decimal [0..1]
+        tapState : TapState
+        pumpRequestedOn : bool
+        confirmStart()
+        requestAddition(completedTap)
+        stop(reason)
+    }
+
+    class BottleSpec {
+        <<value>>
+        label : string
+        usableCapacityMl : decimal
+    }
+
+    class Calibration {
+        <<value>>
+        massScale : decimal
+        massOffset : decimal
+        densityGPerMl : decimal
+        stabilityToleranceG : decimal
+        stabilityWindowMs : integer
+        freshnessTimeoutMs : integer
+        maxFlowMlPerSec : decimal
+        controlDelayMs : integer
+        afterflowReserveMl : decimal
+        cutoffReserveMl : decimal
+        pulseLimitMs : integer
+        maxRunTimeMs : integer
+        upperLimitEnabled : bool
+        provenance : string
+    }
+
+    class SensorFrame {
+        <<transient>>
+        bootId : string
+        presenceAtMs : integer
+        massAtMs : integer
+        bottlePresent : bool
+        presenceValid : bool
+        massValid : bool
+        grossMassG : decimal [0..1]
+        scaleStable : bool
+        upperLimitState : optional reading
+    }
+
+    class RunRecord {
+        <<entity>>
+        runId : string
+        recordSequence : integer
+        status : RunStatus
+        targetMl : decimal
+        usableCapacityMl : decimal
+        volumeMl : decimal [0..1]
+        kind : MeasurementKind
+        reason : string [0..1]
+        completedAdditionCount() integer
+    }
+
+    class ManualAddition {
+        <<value>>
+        sequenceWithinRun : integer
+        pulseLimitMs : integer
+        conservativeBoundMl : decimal
+        completed : bool
+        increaseMl : decimal [0..1]
+        unavailableReason : string [0..1]
+    }
+
+    class LocalHistory {
+        <<collection>>
+        commitPending(record)
+        commitCheckpoint(record)
+        finalizeOnce(runId, outcome)
+        recoverPendingAsFailed()
+        inspectLatest50()
+    }
+
+    FillSession "0..*" --> "0..1" BottleSpec : selects
+    FillSession "0..*" --> "0..1" Calibration : binds validated values
+    FillSession "0..1" --> "0..1" SensorFrame : latest only
+    FillSession "0..1" --> "0..1" RunRecord : updates current record
+    FillSession ..> LocalHistory : requests durable commits
+    LocalHistory "1" *-- "0..51" RunRecord : retains
+    RunRecord "1" *-- "0..*" ManualAddition : owns results
+
+    note for LocalHistory "Max: 50 terminal + 1 Pending record"
