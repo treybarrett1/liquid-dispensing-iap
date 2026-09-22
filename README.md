@@ -71,6 +71,7 @@ The firmware will use a state machine to coordinate volume entry, waiting for a 
 - Implemented: dispensing-time calculation, input validation, automated tests, project documentation, and a successful ESP32-S3 toolchain compilation check.
 - M2 requirements and elicitation audit: [submission guide](docs/M2_SUBMISSION.md), [eight user stories and three measurable NFRs](docs/M2_REQUIREMENTS.md), and [AI elicitation audit](docs/M2_AI_ELICITATION_AUDIT.md). These documents specify planned behavior; this public milestone does not add the full application.
 - M3 domain model and AI critique: [submission guide](docs/M3_SUBMISSION.md), [revised UML diagram and rationale](docs/M3_DOMAIN_MODEL.md), [untouched AI first draft](docs/ai/M3_DOMAIN_FIRST_DRAFT.md), and [structural critique](docs/M3_AI_MODEL_CRITIQUE.md). Diagram images and editable Mermaid source are included; application implementation is unchanged.
+- M4 architecture decision: [ADR-001](docs/adr/ADR-001-durable-run-record.md) records the choice of one durable run record, two alternatives, and consequences; [submission guide](docs/M4_SUBMISSION.md) maps the evidence to the rubric. This formalizes the M3 design without adding persistence implementation.
 - Planned: touchscreen screens, embedded dispensing state machine, sensor acquisition and calibration, motor-driver control, simulated sensor/state tests, hardware verification, and outcome logging.
 - The current calculation estimates time from a supplied flow rate; it does not control a pump or measure actual dispensed volume.
 
@@ -82,4 +83,5 @@ The firmware will use a state machine to coordinate volume entry, waiting for a 
 - `AI_LOG.md` records AI assistance and the resulting changes.
 - `docs/` contains M2 requirements/audit and M3 domain-model/critique evidence, including original AI drafts.
 - `docs/diagrams/` contains the M3 diagram image, SVG, editable Mermaid source, and rendering configuration.
+- `docs/adr/` contains architecture decision records, beginning with ADR-001 for durable run data and recovery.
 - `tools/esp32-check/` contains the compile-only embedded toolchain check and pinned library dependencies.

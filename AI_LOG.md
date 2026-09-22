@@ -1,5 +1,28 @@
 # AI Prompt-and-Diff Log
 
+## 2026-09-22 - M4 ADR-001
+
+**User prompt:** "Do as you did before", accompanied by two screenshots of IAP M4 - ADR-001. The assignment requires a real architecture decision, context, an unambiguous decision, at least two genuine alternatives with rejection reasons, consequences naming what becomes harder, committed markdown, a repository/file URL, and a prompt-and-diff log.
+
+**Tool:** OpenAI Codex assisted with selecting a documented decision, drafting the ADR, checking consistency, and repository publication. No separate AI-draft experiment was required or conducted for M4.
+
+**Baseline and evidence:** Synced the local public checkout to `a77426d`, preserving the existing M3 critique and hand-drawn diagram. The decision comes from the already committed M3 model: one durable `RunRecord` spanning Pending and terminal states, owning addition values, with transient `FillSession` state. The first AI draft and M3 critique document the alternative of separate marker/outcome objects. The append-only event-history option was evaluated while writing this ADR on September 22, not represented as an earlier implementation or benchmark.
+
+**Prompt-and-diff sequence:**
+
+| Input / decision | Resulting diff |
+| --- | --- |
+| Use an architecture choice evidenced in M3 rather than inventing an unrelated decision | Added `docs/adr/ADR-001-durable-run-record.md`, with links to the actual M2/M3 evidence. |
+| Compare one logical run record with separate marker/outcome objects and an append-only domain-event stream | Wrote explicit benefits, reasons for rejection, and what is lost by rejecting each alternative; distinguished logical records from physical storage/journaling. |
+| Give consequences equal weight to benefits | Documented crash-safe update and eviction complexity, write cost, schema validation, lost event detail, bounded history, and concurrency limits, plus conditions for reconsidering. |
+| Make submission evidence accessible | Added `docs/M4_SUBMISSION.md`, the direct ADR link and rubric mapping, and README links. |
+
+**Verification:** Checked the four required ADR sections, two named alternatives, relative links, consistency with M2/M3, markdown whitespace, and the documentation-only diff. Existing app code, dependencies, tests, prior milestone artifacts, and toolchain-check source are unchanged. No runtime, firmware, power-interruption, or physical performance results are claimed for this documentation change; no new unit tests were added. After pushing, verify public visibility, remote `main`, and file hashes against the local commit.
+
+**Exact diff:** `git diff a77426d..HEAD -- README.md AI_LOG.md docs/M4_SUBMISSION.md docs/adr/ADR-001-durable-run-record.md`. This entry records the M4 request and changes only.
+
+**Boundary:** Accepted design is distinct from implemented persistence. Publishing the repository evidence is distinct from submitting it to the course website.
+
 ## 2026-09-20 - M3 domain model and AI critique
 
 **User prompt:** "next assignment", accompanied by the IAP M3 Domain Model and AI Critique assignment. It requires an AI model drafted from M2 and saved before revision, a revised class/ER diagram image and source, a specific structural critique, and this prompt-and-diff log.
