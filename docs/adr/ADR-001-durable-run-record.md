@@ -6,6 +6,10 @@
 
 **Scope:** The logical representation, ownership, and recovery of a dispensing run's saved data. This ADR does not select a storage library or physical file/flash layout.
 
+## Personal Note:
+  
+  I chose one durable RunRecord for each fill so its identity stays the same from start through completion or interruption. This makes saved results and manual additions easier to manage after a restart. I considered separate pending and outcome records and an event history, but both added coordination or replay complexity beyond my current needs. The tradeoff is that record updates still need protection against power loss, and I cannot reconstruct every intermediate event. The design is simpler, but its reliability still needs testing.
+
 ## Context
 
 The dispenser must retain useful evidence even when power fails during a fill. M2 [US-07, US-08, and NFR-03](../M2_REQUIREMENTS.md) require a run identifier, outcome, available measurements, manual-addition information, a durable pending marker before pumping, and recovery without restarting the pump or duplicating the outcome. The local history must retain the latest 50 terminal outcomes plus at most one pending run. The screen's current session can disappear on reset; the saved evidence cannot depend on that session remaining alive.
