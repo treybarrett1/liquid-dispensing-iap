@@ -1,16 +1,21 @@
 {
   "name": "liquid-dispensing-iap",
   "version": "1.0.0",
-  "description": "A small calculator for estimating liquid dispensing time.",
+  "description": "Liquid dispenser coursework: durable run-history walking skeleton",
   "private": true,
   "scripts": {
-    "test": "vitest run"
+    "build": "node scripts/build.mjs",
+    "start": "node dist/server.js",
+    "test": "vitest run test/dispensing.test.js test/run-history.test.js",
+    "test:e2e": "playwright test"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=24 <25"
   },
   "type": "module",
   "devDependencies": {
+    "@playwright/test": "1.63.0",
+    "esbuild": "0.25.12",
     "vitest": "^3.2.4"
   }
 }

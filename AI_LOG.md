@@ -1,5 +1,29 @@
 # AI Prompt-and-Diff Log
 
+## 2026-10-01 - M5 walking skeleton and CI evidence
+
+**Input:** Three user-supplied IAP M5 screenshots requiring a real request-to-storage slice, successful CI build/test run, working screenshots, repository URL, and prompt-and-diff log.
+
+**Tool:** OpenAI Codex assisted with implementation, tests, docs, and publication; Playwright captured the running browser UI. No separate AI elicitation was required.
+
+**Baseline:** Synced public main to `7468b91`, preserving prior work. No serial device was detected. The user was asked about board availability; work proceeded with a disclosed desktop developer path. The full private application was not copied.
+
+| Task / decision | Resulting diff |
+| --- | --- |
+| Implement a narrow real record lifecycle | Added `src/run-history.js` for validation, creation, cancellation, and recovery. A developer recovery record does not authorize a pump. |
+| Store actual requests and return committed reads | Added `src/sqlite-history.js`: SQLite file, transactions, one-pending constraint, stable IDs, terminal protection, and 50-outcome retention. |
+| Expose a working edge | Added HTTP server and browser form/history, with real errors and explicitly unavailable measurements. |
+| Build and test the desktop layers | Added esbuild build, 11 database tests alongside 12 calculator tests, and 2 browser tests against the built server. |
+| Capture deliberate evidence | Browser test directly queries SQLite, kills/restarts the server twice, and captures Pending, recovered, rejected, and cancelled states. Saved four PNGs and observed JSON under `docs/evidence/m5/`. |
+| Run meaningful CI | Added pinned Actions workflow: Node 24, locked install, production build, tests, Chromium, and browser/restart tests with artifact upload. |
+| Explain the scope | Added ADR-002, README commands, and M5 submission guide. Embedded integration remains separately unverified. |
+
+**Local verification:** Build succeeded; all 23 calculator/database tests and 2 end-to-end tests passed. A real failed SQLite write was tested using query-only mode. Screenshots came from actual UI operations and process restarts, and were checked against saved row evidence. CI success is reported only after a completed remote run is verified and linked.
+
+**Exact diff:** `git diff 7468b91..HEAD -- .github .gitignore package.json package-lock.json scripts src web test playwright.config.js README.md AI_LOG.md docs/M5_SUBMISSION.md docs/adr/ADR-002-desktop-storage-slice.md docs/evidence/m5`.
+
+**Limits:** Desktop persistence/recovery is implemented; physical control, calibration, additions, and the complete app are not. One server process owns a database. Process restart is not a flash power-cut test. No course-site submission is performed.
+
 ## 2026-09-22 - M4 ADR-001
 
 **User prompt:** "Do as you did before", accompanied by two screenshots of IAP M4 - ADR-001. The assignment requires a real architecture decision, context, an unambiguous decision, at least two genuine alternatives with rejection reasons, consequences naming what becomes harder, committed markdown, a repository/file URL, and a prompt-and-diff log.

@@ -1,5 +1,29 @@
 # Liquid Dispenser Control Application
 
+## Run the M5 walking skeleton
+
+The runnable slice is a **desktop developer interface for durable run history**: browser form -> HTTP -> validation/lifecycle rules -> real SQLite file -> database readback. After a server restart, a pending record becomes Failed/interrupted under the same ID. This is a storage workflow, not simulated dispensing or physical pump authorization.
+
+Use **Node.js 24 LTS** and npm:
+
+```sh
+npm ci
+npm run build
+npm start
+```
+
+Open **http://127.0.0.1:5173**. Enter a target and usable capacity, save a pending record, then stop the server with Ctrl+C and run `npm start` again. Refresh: the same run ID is now Failed with reason `interrupted`. Restart once more to verify there is no duplicate. A pending record can instead be cancelled in the interface.
+
+The database is `data/dispenser.sqlite`, ignored by Git. Keep it between restarts; use one server process per database. `IAP_DB_PATH` selects another file and `PORT` another local port. The server binds only to loopback. Saved records use neither browser storage nor an in-memory database.
+
+```sh
+npm test
+npx playwright install chromium
+npm run test:e2e
+```
+
+The build bundles the production server/browser JavaScript and copies page/styles into `dist/`. End-to-end tests launch that built server, use a browser, independently query a temporary SQLite file, terminate/restart the process, and capture evidence. See the [M5 submission guide](docs/M5_SUBMISSION.md) and [ADR-002](docs/adr/ADR-002-desktop-storage-slice.md).
+
 ## Concept brief
 
 This Individual App Project (IAP) will provide the touchscreen interface and embedded control logic for the liquid-dispensing system being developed in EECE 4991 Junior Design. Running on the ELECROW ESP32-S3 display board, the application will accept a target volume in milliliters, read the bottle-detection and load-cell sensors, operate the pump through its motor driver, show dispensing progress, and handle stop, cancel, and fault conditions. After dispensing, the user will confirm the fill or request small manual additions, with each completed tap requesting one bounded addition rather than continuous dispensing when held. The app will record outcomes and manual additions to support later calibration work. The individual software scope includes the screens, sensor processing, dispensing sequence, and pump-control logic; hardware selection, wiring, and mechanical assembly are part of the broader Junior Design system. The current repository provides an initial calculation and validation module with automated tests; the embedded interface, sensor drivers, and pump control are planned work.
@@ -17,13 +41,13 @@ Planned embedded control application:
 
 Current calculation prototype and verified desktop toolchain:
 
-- Runtime and language: Node.js 18+ with modern JavaScript (ES modules)
+- Runtime and language: Node.js 24 LTS with modern JavaScript (ES modules); built-in SQLite supports the M5 desktop storage adapter.
 - Package manager: npm
 - Test runner: Vitest
 - Version control and hosting: Git and GitHub
 - AI coding tool: OpenAI Codex
 
-The JavaScript code runs on the development computer, and Vitest verifies only that calculation prototype. The repository also contains a small C++ installation check in `tools/esp32-check` for compiling the ESP32-S3 framework and libraries. The dispenser firmware itself has not been implemented, and hardware operation remains unverified.
+The JavaScript code runs on the development computer. M5 adds an HTTP service, SQLite persistence, browser interface, integration tests, and browser/restart tests alongside the calculator. The repository also contains the C++ installation check in `tools/esp32-check`. Physical firmware integration remains planned; this desktop slice does not validate the display, sensors, driver, or pump.
 
 ## Selected hardware
 
@@ -68,17 +92,21 @@ The firmware will use a state machine to coordinate volume entry, waiting for a 
 
 ## Current milestone status
 
-- Implemented: dispensing-time calculation, input validation, automated tests, project documentation, and a successful ESP32-S3 toolchain compilation check.
+- Implemented: calculation/input validation, desktop record creation/cancellation/recovery, SQLite history with bounded retention, automated tests, and the earlier ESP32-S3 toolchain compilation check.
 - M2 requirements and elicitation audit: [submission guide](docs/M2_SUBMISSION.md), [eight user stories and three measurable NFRs](docs/M2_REQUIREMENTS.md), and [AI elicitation audit](docs/M2_AI_ELICITATION_AUDIT.md). These documents specify planned behavior; this public milestone does not add the full application.
 - M3 domain model and AI critique: [submission guide](docs/M3_SUBMISSION.md), [revised UML diagram and rationale](docs/M3_DOMAIN_MODEL.md), [untouched AI first draft](docs/ai/M3_DOMAIN_FIRST_DRAFT.md), and [structural critique](docs/M3_AI_MODEL_CRITIQUE.md). Diagram images and editable Mermaid source are included; application implementation is unchanged.
 - M4 architecture decision: [ADR-001](docs/adr/ADR-001-durable-run-record.md) records the choice of one durable run record, two alternatives, and consequences; [submission guide](docs/M4_SUBMISSION.md) maps the evidence to the rubric. This formalizes the M3 design without adding persistence implementation.
-- Planned: touchscreen screens, embedded dispensing state machine, sensor acquisition and calibration, motor-driver control, simulated sensor/state tests, hardware verification, and outcome logging.
+- M5 walking skeleton: [screenshots and submission guide](docs/M5_SUBMISSION.md), with a real desktop request-to-storage path and [GitHub Actions workflow](.github/workflows/ci.yml).
+- Planned: embedded touchscreen/state machine, sensor calibration, motor-driver control, additions/final-measurement logging, and hardware verification.
 - The current calculation estimates time from a supplied flow rate; it does not control a pump or measure actual dispensed volume.
 
 ## Project layout
 
 - `src/dispensing.js` contains the dispensing-time calculation.
 - `src/volume.js` contains measurement validation.
+- `src/run-history.js`, `src/sqlite-history.js`, and `src/server.js` implement the M5 domain, persistence, and HTTP layers.
+- `web/` contains the M5 developer interface; `scripts/build.mjs` builds the desktop slice.
+- `test/run-history.test.js` and `test/e2e/` exercise real persistence and the browser/restart path.
 - `test/dispensing.test.js` contains the automated tests.
 - `AI_LOG.md` records AI assistance and the resulting changes.
 - `docs/` contains M2 requirements/audit and M3 domain-model/critique evidence, including original AI drafts.

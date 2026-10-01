@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Liquid dispenser · Run history</title>
+  <link rel="stylesheet" href="/style.css">
+  <script type="module" src="/app.js"></script>
+</head>
+<body>
+  <main>
+    <header><p class="eyebrow">LIQUID DISPENSER / IAP M5</p><h1>Run history</h1>
+      <p class="intro">Create a recovery record, then inspect its saved state.</p></header>
+    <aside class="boundary">Developer interface for saved records. No dispensing, sensor readings, or pump commands.</aside>
+    <div class="workspace">
+      <section class="panel"><h2>New recovery record</h2>
+        <form id="create-form">
+          <label for="target">Target volume <span>mL</span></label>
+          <input id="target" name="target" type="number" min="0.01" step="any" required>
+          <label for="capacity">Usable bottle capacity <span>mL</span></label>
+          <input id="capacity" name="capacity" type="number" min="0.01" step="any" required>
+          <p class="hint">Capacity excludes headspace. Creating this record does not authorize a fill.</p>
+          <button id="create" type="submit">Save pending record</button>
+        </form>
+        <p id="message" role="status" aria-live="polite">Loading saved history…</p>
+      </section>
+      <section class="panel history"><div class="section-top"><h2>Saved on this computer</h2><button id="refresh" class="secondary">Refresh history</button></div>
+        <p class="hint">A pending record becomes Failed / interrupted when the server restarts. Its run ID stays the same.</p>
+        <div id="runs" aria-live="polite"></div>
+      </section>
+    </div>
+    <footer><span id="storage">Connecting to SQLite…</span><span id="instance"></span></footer>
+  </main>
+</body>
+</html>

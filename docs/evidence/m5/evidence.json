@@ -1,0 +1,28 @@
+{
+  "capturedAt": "2026-10-01T21:01:00.295Z",
+  "runId": "e24c365e-dee7-4019-a734-45b0caa0a65c",
+  "diskBefore": {
+    "run_id": "e24c365e-dee7-4019-a734-45b0caa0a65c",
+    "target_ml": 120.5,
+    "capacity_ml": 150,
+    "status": "Pending"
+  },
+  "diskAfter": {
+    "run_id": "e24c365e-dee7-4019-a734-45b0caa0a65c",
+    "target_ml": 120.5,
+    "capacity_ml": 150,
+    "status": "Failed",
+    "reason": "interrupted"
+  },
+  "firstInstance": "6fb3c37c-e8f9-4b1a-b72e-c111e2644602",
+  "recoveredInstance": "63c37bef-4f7f-4887-9070-2880734cdd18",
+  "secondRestartInstance": "48eca9e3-ce58-4467-8b83-d5484e088a2b",
+  "assertions": [
+    "real SQLite query before and after process termination",
+    "same run ID recovered",
+    "new server instance",
+    "second recovery produced no duplicate",
+    "over-capacity rejected",
+    "cancellation survived page reload"
+  ]
+}
