@@ -20,6 +20,8 @@
 
 **Local verification:** Build succeeded; all 23 calculator/database tests and 2 end-to-end tests passed. A real failed SQLite write was tested using query-only mode. Screenshots came from actual UI operations and process restarts, and were checked against saved row evidence. CI success is reported only after a completed remote run is verified and linked.
 
+**Remote verification:** [CI run 36926306691](https://github.com/treybarrett1/liquid-dispensing-iap/actions/runs/36926306691) completed successfully on October 1 for implementation commit `1bbf5e459a592b4744cb05e1c825948d9ba94a42`. Production build, 23 calculator/database tests, 2 end-to-end tests, and screenshot/report upload passed. A follow-up documentation-only commit adds this exact run link to the submission evidence.
+
 **Exact diff:** `git diff 7468b91..HEAD -- .github .gitignore package.json package-lock.json scripts src web test playwright.config.js README.md AI_LOG.md docs/M5_SUBMISSION.md docs/adr/ADR-002-desktop-storage-slice.md docs/evidence/m5`.
 
 **Limits:** Desktop persistence/recovery is implemented; physical control, calibration, additions, and the complete app are not. One server process owns a database. Process restart is not a flash power-cut test. No course-site submission is performed.

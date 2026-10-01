@@ -40,7 +40,7 @@ A valid 60 mL record is cancelled, and its terminal state is read back after rel
 
 The [CI workflow](../.github/workflows/ci.yml) installs locked dependencies, **builds the production server and browser**, runs calculator/real-SQLite tests, installs Chromium, and runs browser/process-restart tests against the built server. It uploads `m5-browser-evidence` for 30 days. Screenshots above are committed so they remain available after artifact expiration.
 
-The exact successful CI run link will be recorded here after the first remote run completes. A configured workflow alone is not claimed as a green run.
+**Verified green run:** [Walking skeleton CI #1 - build, tests, and browser evidence](https://github.com/treybarrett1/liquid-dispensing-iap/actions/runs/36926306691), implementation commit `1bbf5e459a592b4744cb05e1c825948d9ba94a42`. The build, 23 calculator/database tests, 2 end-to-end tests, and evidence upload all passed on October 1, 2026. Subsequent evidence-link documentation does not change the implementation exercised by this run.
 
 Local results: production build passed; **23 tests** passed (12 original calculator, 11 SQLite/domain); **2 end-to-end tests** passed. Database tests cover invalid values, same-ID recovery, duplicate prevention, terminal protection, retention, and an actual SQLite write failure under query-only mode.
 
@@ -62,7 +62,7 @@ Open http://127.0.0.1:5173. Save a pending record, stop/restart the server retai
 | Criterion | Points | Evidence |
 | --- | --- | --- |
 | Genuine end-to-end path | 7 | Form/request/domain/SQLite/readback, direct database queries, actual process restarts, and screenshots. |
-| CI configured and green run linked | 6 | Committed workflow; exact successful run added after verification. |
+| CI configured and green run linked | 6 | Committed workflow and verified [successful run #1](https://github.com/treybarrett1/liquid-dispensing-iap/actions/runs/36926306691). |
 | Meaningful build and tests | 4 | Esbuild production build, 23 calculator/database tests, and 2 end-to-end tests using real storage. |
 | Legible captures and prompt-and-diff log | 3 | Four screenshots, observed evidence JSON, and [AI_LOG.md](../AI_LOG.md). |
 
