@@ -1,0 +1,35 @@
+ACTUAL FAULTED CI OUTPUT
+Fault commit: 13ee920b3490e4823ad65754ab38e639231ca9fe
+Failed run: https://github.com/treybarrett1/liquid-dispensing-iap/actions/runs/39696150480
+Raw artifact:
+https://github.com/treybarrett1/liquid-dispensing-iap/actions/runs/39696150480/artifacts/12390941891
+
+npm test (existing Vitest suite): 23 passed
+
+npm run test:m6:
+  tests 27
+  pass 24
+  fail 3
+
+FAILED: M5 HTTP boundary accepts exact-capacity target and persists it; rejects overflow
+  AssertionError: Exactly-full valid bottle must be accepted.
+  400 !== 201
+  test/m6/acceptance.test.mjs:76
+
+FAILED: an exactly full bottle is allowed (inclusive capacity boundary)
+  Error: Target exceeds usable bottle capacity.
+  src/run-history.js:21
+  test/m6/logic.test.mjs:27
+
+FAILED: one committed Pending record preserves exact volumes and run identity
+  Error: Target exceeds usable bottle capacity.
+  src/run-history.js:21
+  test/m6/logic.test.mjs:70
+
+GitHub Actions result: FAILURE; M6 Node test exit code 1.
+Chromium/Playwright steps were skipped by the failing gate. The suite
+caught a subtle boundary bug without modifying tests.
+
+The injected code was a one-character > to >= replacement. This is a
+user-visible fault: with target = usable bottle capacity, valid
+requests are rejected with HTTP 400 and no Pending row is saved.

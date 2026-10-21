@@ -1,0 +1,56 @@
+name: IAP M6 Test Evidence
+on:
+  push:
+    paths:
+      - 'src/**'
+      - 'test/**'
+      - 'web/**'
+      - 'scripts/**'
+      - 'package.json'
+      - 'package-lock.json'
+      - '.github/workflows/m6-testing.yml'
+      - 'docs/m6/**'
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  m6-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - name: Build real M5 server and UI
+        run: npm run build
+      - name: Existing Vitest regression tests
+        run: npm test
+      - name: M6 Node acceptance/unit tests and V8 source coverage report
+        shell: bash
+        run: |
+          mkdir -p m6-artifacts
+          set -o pipefail
+          npm run test:m6 2>&1 | tee m6-artifacts/test-and-coverage.txt
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Existing real-browser acceptance tests
+        shell: bash
+        run: |
+          set -o pipefail
+          npm run test:e2e 2>&1 | tee m6-artifacts/browser-tests.txt
+      - name: Upload raw CI output and browser evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: m6-test-coverage-evidence
+          path: |
+            m6-artifacts/
+            test-results/
+            playwright-report/
+          retention-days: 90

@@ -178,3 +178,14 @@
 **Installation troubleshooting:** The VS Code extension's automatic Core installer overlapped with the manual installation and reported a missing `pip` module. Verified the completed environment's `pip` and Core commands before continuing. No antivirus settings were changed.
 
 **Verification:** The existing 12 JavaScript tests pass. The ESP32-S3 installation check compiled and linked successfully with Arduino-ESP32, LVGL, LovyanGFX, TAMC_GT911, and HX711. The platform installer added pioarduino Core dependencies; aligned Uvicorn to 0.40.0 and Click to 8.3.3 to satisfy the installed tools. Versions and reproduction commands are recorded in `tools/esp32-check/README.md`. No serial device was detected, no board was flashed, and physical display, sensor, and pump behavior has not been tested. The PCB revision remains unconfirmed.
+
+## October 21, 2026 — M6 effectiveness tests on Individual App Project
+
+- Responsible member: Charles Barrett; AI tool: ChatGPT GPT-6.
+- **Correct repository:** `treybarrett1/liquid-dispensing-iap` (not the unrelated team ticket project).
+- [Verbatim prompts, correction, file diffs, outcomes and verification](docs/m6/PROMPT_AND_DIFF_LOG.md).
+- [M6 submission evidence index](docs/m6/SUBMISSION.md).
+- New real HTTP/SQLite acceptance tests plus behavioral unit tests and CI source-coverage report.
+- Observed CI sequence: [27 green](https://github.com/treybarrett1/liquid-dispensing-iap/actions/runs/39696050680) -> [3 fail, 24 pass on injected fault](https://github.com/treybarrett1/liquid-dispensing-iap/actions/runs/39696150480) -> [27 green after restoration](https://github.com/treybarrett1/liquid-dispensing-iap/actions/runs/39696222298). Existing 23 Vitest and 2 Playwright tests also green on restored commit.
+- Measured coverage: 98.41% lines, 98.08% branches, 100% functions in four imported application source modules. Server source, ESP32 and physical pump/sensor behavior are not included in the coverage claim.
+- No fabricated test output, team-project evidence substitution, hardware verification, or course-site submission claimed.

@@ -1,0 +1,24 @@
+ACTUAL CI TEST OUTPUT: clean baseline
+Project: treybarrett1/liquid-dispensing-iap
+Commit: c76613bdd453dbc497d89cf485ba046561dad4f9
+GitHub Actions run: https://github.com/treybarrett1/liquid-dispensing-iap/actions/runs/39696050680
+Raw evidence artifact:
+https://github.com/treybarrett1/liquid-dispensing-iap/actions/runs/39696050680/artifacts/12390384677
+
+npm ci: SUCCESS
+npm run build: SUCCESS
+
+npm test (Vitest):
+  Test Files 2 passed (2)
+  Tests 23 passed (23)
+
+npm run test:m6 (Node native test runner):
+  tests 27
+  pass 27
+  fail 0
+
+npm run test:e2e (Playwright Chromium):
+  2 passed
+
+Pipeline: SUCCESS (including real browser and SQLite tests).
+These are abbreviated excerpts of actual CI job output, not a synthetic run.
