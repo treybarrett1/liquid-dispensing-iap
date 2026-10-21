@@ -54,7 +54,7 @@ function readRows(filename) {
   try {
     return reader.prepare(
       'SELECT run_id, target_ml, capacity_ml, status, reason FROM runs ORDER BY sequence',
-    ).all();
+    ).all().map(row => ({ ...row }));
   } finally {
     reader.close();
   }
