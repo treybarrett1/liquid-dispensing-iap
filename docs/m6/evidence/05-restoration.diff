@@ -1,0 +1,10 @@
+# Actual restoring commit d469674f0bfeeb72e6d9a19617456cf9a290e50e
+# https://github.com/treybarrett1/liquid-dispensing-iap/commit/d469674f0bfeeb72e6d9a19617456cf9a290e50e
+diff --git a/src/run-history.js b/src/run-history.js
+--- a/src/run-history.js
++++ b/src/run-history.js
+@@
+-  if (targetMl >= usableCapacityMl) {
++  if (targetMl > usableCapacityMl) {
+     throw new DomainError('Target exceeds usable bottle capacity.');
+   }

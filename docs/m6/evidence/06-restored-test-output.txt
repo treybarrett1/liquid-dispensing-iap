@@ -1,0 +1,22 @@
+ACTUAL RESTORED CI OUTPUT
+Fix commit: d469674f0bfeeb72e6d9a19617456cf9a290e50e
+Successful run: https://github.com/treybarrett1/liquid-dispensing-iap/actions/runs/39696222298
+Raw artifact:
+https://github.com/treybarrett1/liquid-dispensing-iap/actions/runs/39696222298/artifacts/12391346124
+
+npm ci: SUCCESS
+npm run build: SUCCESS
+npm test (Vitest): 23 passed
+npm run test:m6 (Node native):
+  tests 27
+  pass 27
+  fail 0
+npm run test:e2e (Playwright browser):
+  2 passed (2.2s)
+
+Source V8 coverage: 98.41% lines; 98.08% branches; 100% funcs
+(4 imported src modules; server and hardware out of denominator).
+GitHub Actions conclusion: SUCCESS.
+
+Tests were unchanged from clean baseline and fault run. Only the
+invalid production condition was reverted to restore green.

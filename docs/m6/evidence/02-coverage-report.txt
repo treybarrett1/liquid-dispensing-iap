@@ -1,0 +1,30 @@
+ACTUAL COVERAGE REPORT: clean and restored source-level measurement
+Baseline commit: c76613bdd453dbc497d89cf485ba046561dad4f9
+Baseline run: https://github.com/treybarrett1/liquid-dispensing-iap/actions/runs/39696050680
+Restored commit: d469674f0bfeeb72e6d9a19617456cf9a290e50e
+Restored run: https://github.com/treybarrett1/liquid-dispensing-iap/actions/runs/39696222298
+
+Command:
+npm run test:m6
+which invokes:
+node --test --experimental-test-coverage '--test-coverage-include=src/*.js' test/m6/*.test.mjs
+
+# start of coverage report
+# -------------------------------------------------------------------
+# file               | line % | branch % | funcs % | uncovered lines
+# -------------------------------------------------------------------
+# src                |        |          |         |
+#  dispensing.js     | 100.00 |   100.00 |  100.00 |
+#  run-history.js    | 100.00 |   100.00 |  100.00 |
+#  sqlite-history.js |  97.39 |    96.30 |  100.00 | 29-31
+#  volume.js         | 100.00 |   100.00 |  100.00 |
+# -------------------------------------------------------------------
+# all files          |  98.41 |    98.08 |  100.00 |
+# -------------------------------------------------------------------
+# end of coverage report
+
+CAVEAT: coverage is over the four source modules executed in the M6
+node:test process. Actual production server src/server.js is
+bundled and run by a separate process and is not reflected in this V8
+coverage table. Hardware control and embedded firmware not included.
+This report is not a substitute for bug-injection evidence.

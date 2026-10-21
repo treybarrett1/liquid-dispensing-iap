@@ -1,0 +1,11 @@
+# Actual deliberate fault, commit 13ee920b3490e4823ad65754ab38e639231ca9fe
+# https://github.com/treybarrett1/liquid-dispensing-iap/commit/13ee920b3490e4823ad65754ab38e639231ca9fe
+# One-character error: the valid exactly-capacity target is now rejected.
+diff --git a/src/run-history.js b/src/run-history.js
+--- a/src/run-history.js
++++ b/src/run-history.js
+@@
+-  if (targetMl > usableCapacityMl) {
++  if (targetMl >= usableCapacityMl) {
+     throw new DomainError('Target exceeds usable bottle capacity.');
+   }
