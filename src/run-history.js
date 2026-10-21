@@ -17,7 +17,7 @@ export function validateTarget(input) {
       throw new DomainError(`${label} must be a finite number greater than zero.`);
     }
   }
-  if (targetMl >= usableCapacityMl) {
+  if (targetMl > usableCapacityMl) {
     throw new DomainError('Target exceeds usable bottle capacity.');
   }
   return { targetMl, usableCapacityMl };
