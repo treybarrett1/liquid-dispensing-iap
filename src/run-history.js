@@ -7,16 +7,19 @@ export class DomainError extends Error {
   }
 }
 
+function requirePositiveFinite(label, value) {
+  if (typeof value !== 'number' || !Number.isFinite(value) || value <= 0) {
+    throw new DomainError(`${label} must be a finite number greater than zero.`);
+  }
+}
+
 export function validateTarget(input) {
   if (!input || typeof input !== 'object' || Array.isArray(input)) {
     throw new DomainError('Enter a target and usable bottle capacity.');
   }
   const { targetMl, usableCapacityMl } = input;
-  for (const [label, value] of [['Target', targetMl], ['Usable capacity', usableCapacityMl]]) {
-    if (typeof value !== 'number' || !Number.isFinite(value) || value <= 0) {
-      throw new DomainError(`${label} must be a finite number greater than zero.`);
-    }
-  }
+  requirePositiveFinite('Target', targetMl);
+  requirePositiveFinite('Usable capacity', usableCapacityMl);
   if (targetMl > usableCapacityMl) {
     throw new DomainError('Target exceeds usable bottle capacity.');
   }
