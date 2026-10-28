@@ -1,0 +1,12 @@
+M7 evidence consistency verification
+UTC: 2026-10-28T19:09:06.952Z
+Before: 05a1b79a80f189ebf49f12e313406ce18618f32e
+After: fa0a51d0fdbda5a6f39983ad7956a17cb93a2ec6
+PASS: original main is the merge base of the tested refactor.
+PASS: Node.js v24.18.0 and all four requested commands succeeded on both revisions.
+PASS: both logs report 23/23 Vitest and 27/27 M6 tests; M6 has zero failures, skips, cancellations, or todos.
+PASS: same two Vitest files/test counts and all 27 M6 test names.
+PASS: all nine recorded input SHA-256 hashes match between runs and remained unchanged during each run.
+PASS: test/, scripts/, web/, package files, Playwright config, and workflows are unchanged from original main.
+PASS: current src/ matches tested refactor; src/run-history.js is the only changed runtime file.
+PASS: saved source diff and complete tested-revision diff exactly match git diff.

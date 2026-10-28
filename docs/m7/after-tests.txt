@@ -1,0 +1,159 @@
+M7 after verification
+UTC start: 2026-10-28T19:06:38.265Z
+Repository: https://github.com/treybarrett1/liquid-dispensing-iap
+Revision: fa0a51d0fdbda5a6f39983ad7956a17cb93a2ec6
+Branch: m7-refactor
+Working directory: C:\Users\Trey Barrett\.codex\worktrees\m7-verification\liquid-dispensing-iap
+Node: v24.18.0
+Node executable: C:\Program Files\nodejs\node.exe
+OS: win32 10.0.26300 (x64)
+Tracked runtime and test inputs match HEAD.
+
+Input SHA-256 hashes:
+{
+  "package-lock.json": "074683357c9742dc962007f49c3f09792190fe9a8ff1c72c8be8a20a0eef5150",
+  "package.json": "89ee22f7535b7d8fb23c7dee2bf68eb5d7384f7f9be6fd8b5bf8ac8c35fd3722",
+  "playwright.config.js": "82b06827ee56481a1ddc0cc282ce3559c6f8ddd05dea892815d77d985d6b9d7f",
+  "scripts/build.mjs": "eb2221588468f9d31e32a595f8ae37ab1ccd6390331018425b946f6c5674a7f8",
+  "test/dispensing.test.js": "64291f5d6b5da6260e41c65694a2715a790e9f498768b94553d9f5a96e7dc5f2",
+  "test/e2e/walking-skeleton.spec.js": "7e33427ccc089dd58f6ae97aff969a6347cc30afaadb41dfae9dc95c78ea5352",
+  "test/m6/acceptance.test.mjs": "fd32f46d842e8f94e4a030a3f04233f4e48f66384617103d9b22a0bcd7a14efe",
+  "test/m6/logic.test.mjs": "728e2a8e5951c9ae98feb69b1e510bb9e84ff01adb00e1ec44afb2b836f5d129",
+  "test/run-history.test.js": "3d37cbe7e85960db073692ed7f8ccbb0e4993c41b17455e8b7713cae1b7b6681"
+}
+
+$ npm --version
+UTC start: 2026-10-28T19:06:38.339Z
+--- stdout ---
+11.16.0
+
+--- stderr ---
+
+Exit code: 0; signal: none; elapsed: 284 ms
+
+$ npm ci
+UTC start: 2026-10-28T19:06:38.625Z
+--- stdout ---
+
+added 54 packages, and audited 55 packages in 2s
+
+15 packages are looking for funding
+  run `npm fund` for details
+
+5 vulnerabilities (1 moderate, 2 high, 2 critical)
+
+To address issues that do not require attention, run:
+  npm audit fix
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+
+--- stderr ---
+npm warn allow-scripts 1 package has install scripts not yet covered by allowScripts:
+npm warn allow-scripts   esbuild@0.25.12 (postinstall: node install.js)
+npm warn allow-scripts
+npm warn allow-scripts Run `npm approve-scripts --allow-scripts-pending` to review, or `npm approve-scripts <pkg>` to allow.
+
+Exit code: 0; signal: none; elapsed: 2144 ms
+
+$ npm run build
+UTC start: 2026-10-28T19:06:40.769Z
+--- stdout ---
+
+> liquid-dispensing-iap@1.0.0 build
+> node scripts/build.mjs
+
+Built production server and browser assets in dist/.
+
+--- stderr ---
+
+Exit code: 0; signal: none; elapsed: 466 ms
+
+$ npm test
+UTC start: 2026-10-28T19:06:41.236Z
+--- stdout ---
+
+> liquid-dispensing-iap@1.0.0 test
+> vitest run test/dispensing.test.js test/run-history.test.js
+
+
+ RUN  v3.2.7 C:/Users/Trey Barrett/.codex/worktrees/m7-verification/liquid-dispensing-iap
+
+ ✓ test/dispensing.test.js (12 tests) 3ms
+ ✓ test/run-history.test.js (11 tests) 147ms
+
+ Test Files  2 passed (2)
+      Tests  23 passed (23)
+   Start at  14:06:41
+   Duration  538ms (transform 41ms, setup 0ms, collect 70ms, tests 150ms, environment 0ms, prepare 222ms)
+
+
+--- stderr ---
+
+Exit code: 0; signal: none; elapsed: 1313 ms
+
+$ npm run test:m6
+UTC start: 2026-10-28T19:06:42.550Z
+--- stdout ---
+
+> liquid-dispensing-iap@1.0.0 test:m6
+> node --test --experimental-test-coverage '--test-coverage-include=src/*.js' test/m6/*.test.mjs
+
+✔ M5 HTTP boundary accepts exact-capacity target and persists it; rejects overflow (150.2031ms)
+✔ M5 real process restart recovers one pending SQLite record without duplicates (262.0344ms)
+✔ an exactly full bottle is allowed (inclusive capacity boundary) (1.1675ms)
+✔ fractional amount immediately above capacity is rejected (0.3241ms)
+✔ fractional target below capacity is accepted without rounding (0.0757ms)
+✔ target 0 is rejected (0.0756ms)
+✔ target -0.1 is rejected (0.0448ms)
+✔ target -1 is rejected (0.0505ms)
+✔ target NaN is rejected (0.0412ms)
+✔ target Infinity is rejected (0.0405ms)
+✔ target 120 is rejected (0.0498ms)
+✔ target null is rejected (0.0333ms)
+✔ target undefined is rejected (0.0324ms)
+✔ capacity 0 is rejected (0.0625ms)
+✔ capacity -1 is rejected (0.1406ms)
+✔ capacity Infinity is rejected (0.0586ms)
+✔ capacity 150 is rejected (0.0483ms)
+✔ capacity null is rejected (0.0298ms)
+✔ missing or array input is rejected as malformed (0.0654ms)
+✔ one committed Pending record preserves exact volumes and run identity (10.5119ms)
+✔ an invalid over-capacity request writes no record (7.63ms)
+✔ only one pending record is allowed and cancellation is idempotent (8.8604ms)
+✔ cancelled record remains cancelled after file reopen (11.3311ms)
+✔ restart recovery fails pending run under same id exactly once (13.3577ms)
+✔ unknown id cannot be cancelled and existing row is unchanged (7.7937ms)
+✔ SQL write failure is rolled back without false success (7.7008ms)
+✔ time estimate follows observable volume and flow rate (0.1637ms)
+ℹ tests 27
+ℹ suites 0
+ℹ pass 27
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 491.3901
+ℹ start of coverage report
+ℹ -------------------------------------------------------------------
+ℹ file               | line % | branch % | funcs % | uncovered lines
+ℹ -------------------------------------------------------------------
+ℹ src                |        |          |         | 
+ℹ  dispensing.js     | 100.00 |   100.00 |  100.00 | 
+ℹ  run-history.js    | 100.00 |   100.00 |  100.00 | 
+ℹ  sqlite-history.js |  97.39 |    96.30 |  100.00 | 29-31
+ℹ  volume.js         | 100.00 |   100.00 |  100.00 | 
+ℹ -------------------------------------------------------------------
+ℹ all files          |  98.44 |    98.04 |  100.00 | 
+ℹ -------------------------------------------------------------------
+ℹ end of coverage report
+
+--- stderr ---
+
+Exit code: 0; signal: none; elapsed: 942 ms
+
+Inputs unchanged during execution: true
+Command results: [{"command":"npm --version","exitCode":0},{"command":"npm ci","exitCode":0},{"command":"npm run build","exitCode":0},{"command":"npm test","exitCode":0},{"command":"npm run test:m6","exitCode":0}]
+UTC finish: 2026-10-28T19:06:43.495Z
